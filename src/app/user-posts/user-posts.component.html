@@ -1,7 +1,7 @@
 <h2>Posts</h2>
 
 <div *ngFor="let post of userPosts">
-  <h3>{{ post.title }}</h3>
+  <h3>{{ post.title | reverse }}</h3>
   <p>{{ post.content }}</p>
   <div>
     <button (click)="likePost(post.id)">

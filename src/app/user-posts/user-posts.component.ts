@@ -1,17 +1,25 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { PostsService } from '../posts.service';
+import { ReversePipe } from '../reverse.pipe';
 
 @Component({
   selector: 'app-user-posts',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReversePipe],
   templateUrl: './user-posts.component.html',
   styleUrl: './user-posts.component.scss'
 })
 export class UserPostsComponent {
-  @Input() userPosts: any[] = [];
+
+  constructor(private postsService: PostsService){}
+
+  ngOnInit() {
+    this.postsService.fetchPosts().subscribe(posts => this.userPosts = posts);
+  }
+
+  userPosts: any[] = [];
   likedPosts: Set<number> = new Set();
   newComment: string = '';
 
